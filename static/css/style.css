@@ -1,0 +1,14 @@
+.project-sidebar{
+    border-right: 1px solid #e9ecef;
+}
+.project-sidebar-block{
+    padding: 10px 0px;
+}
+
+.project-sidebar-link {
+    margin: 10px 0px;
+}
+
+.sidebar-block {
+    display: inline-block
+}
