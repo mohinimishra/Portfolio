@@ -20,7 +20,7 @@ app.get('/projects/:slug', routes.projectDetails)
 
 app.get('/blog', routes.blog)
 
-app.get('/blog:slug', routes.blogDetails)
+app.get('/blogDetails/:slug', routes.blogDetails)
 
 app.get('/about', routes.about)
 

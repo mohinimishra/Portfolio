@@ -2,17 +2,13 @@
     <div class="row">
         <div class="col-md-3 project-sidebar">
             <h6>Categories</h6>
-            <div class="project-sidebar-link"><a href="#">HTML</a></div>
-            <div class="project-sidebar-link"><a href="#">CSS</a></div>
-            <div class="project-sidebar-link"><a href="#">Javascript</a></div>
-            <div class="project-sidebar-link"><a href="#">Express</a></div>
-            <div class="project-sidebar-link"><a href="#">MongoDB</a></div>
-            <div class="project-sidebar-link"><a href="#">REST API</a></div>
-            <div class="project-sidebar-link"><a href="#">Angular</a></div>
-            <div class="project-sidebar-link"><a href="#">Bootstrap</a></div>
+            <% categories.forEach((ele) =>{ %>
+            <div class="project-sidebar-link"><a href="#"><%= ele%></a></div>
+            <% })%>
+
             <hr>
             <h6>Archives</h6>
-            <div class="project-sidebar-link"><a href="#">June 20120</a></div>
+            <div class="project-sidebar-link"><a href="#">June 2020</a></div>
             <div class="project-sidebar-link"><a href="#">May 2020</a></div>
             <div class="project-sidebar-link"><a href="#">April 2020</a></div>
             <div class="project-sidebar-link"><a href="#">March 2020</a></div>
@@ -24,14 +20,11 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Building a static portfolio site using
-                        Bootstrap 4</li>
+                    <li class="breadcrumb-item active" aria-current="page"><%= data.name%></li>
                 </ol>
             </nav>
-            <h1>Building a static portfolio site using Bootstrap 4</h1>
-            <p>In this project you will build a small number guessing game. System will select a random number between 1
-                and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too
-                low.
+            <h1><%= data.name%></h1>
+            <p><%= data.description %>
             </p>
             <img src="/image/images.jpeg"> <br>
             <small>Watch a live demo <a href="#">Here</a></small>

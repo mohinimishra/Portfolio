@@ -1,7 +1,7 @@
 <div class="container py-3 bg-light">
     <div class="row">
         <div class="col-md-3 project-sidebar">
-            <div><img src="/image/mohini.jpeg" alt="" srcset="" width="200px" height="200px"></div>
+            <div><img src="/image/mohini.jpeg" class="image" alt="" srcset="" width="200px" height="200px"></div>
             <hr>
 
             <h5>Social Profiles</h5>
@@ -47,7 +47,11 @@
             <h1 class="about-h1">Project Timelines</h1>
             <p class="about-p">In this section we will discuss how much time it will take to build this project,
                 followed by a steo by
-                step guide.</p>
+                step guide.
+            </p>
+            <% blogInd.forEach((ele)=>{ %>
+            <div><a href="#"><%=ele%></a></div>
+            <% })%>
         </div>
     </div>
 </div>

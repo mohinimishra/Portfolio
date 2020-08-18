@@ -1,161 +1,24 @@
-<div class="album py-5 bg-light">
+<div class="album bg-light">
     <div class="container">
-
         <div class="row">
+            <% projects.forEach((ele)=>{ %>
             <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
                     <img src="/image/images.jpeg" alt="" srcset="">
                     <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
+                        <h1><%= ele.name %></h1>
+                        <p class="card-text"><%= ele.description %></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
+                                <a href="/projects/<%= ele.alias%>" class="btn btn-sm btn-outline-secondary">Details</a>
+                                <a href="<%= ele.githubUrl%>" class="btn btn-sm btn-outline-secondary">Github</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
+            <% }) %>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img src="/image/images.jpeg" alt="" srcset="">
-                    <div class="card-body">
-                        <h1>Project 1</h1>
-                        <p class="card-text">This is a wider card with supporting text below as a natural
-                            lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/projects/number-guessing" class="btn btn-sm btn-outline-secondary">Details</a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Github</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

@@ -8,5 +8,6 @@ module.exports.notFound = (req, res, next) => {
 }
 
 module.exports.errorHandler = (err, req, res, next) => {
+    console.log(err)
     res.status(500).send('Something Went Wrong')
 }
