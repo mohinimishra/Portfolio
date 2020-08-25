@@ -13,6 +13,7 @@
     display: inline-block
 }
 
+/* portfolio page */
 .icon-link {
     display: flex;
     flex-direction: row;
@@ -45,6 +46,11 @@
     transform: scale(1.1);
 }
 
+/* about page */
 .about-h1{
     font-size: 2rem;
+}
+
+button {
+    width: 100%;
 }

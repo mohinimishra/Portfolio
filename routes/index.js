@@ -56,10 +56,47 @@ module.exports.blogDetails = (req, res) => {
 module.exports.about = (req, res) => {
     let blog = data.blogIndex
     let blogInd = Object.keys(blog)
-    console.log(blogInd)
     res.render('about', {
         layout: 'layout',
         title: 'about',
         blogInd
     })
 }
+module.exports.contact = (req, res) => {
+    res.render('contact', {
+        layout: 'layout',
+        title: 'contact'
+    })
+}
+
+module.exports.signin = (req, res) => {
+    res.render('signin', {
+        layout: 'layout',
+        title: 'signin'
+    })
+}
+
+let db = [{
+    email: "mohini@gmail.com",
+    password: 12345
+},
+{
+    email: "mm@gmail.com",
+    password: 123
+}]
+
+module.exports.login = (req, res) => {
+    let body = req.body
+    bodyEmail = body.email
+    bodyPass = body.password
+    // dbEmail = db[0].email
+    // dbPass = db[0].password
+    db.forEach((ele) => {
+        if (ele.email == bodyEmail) { console.log("sucessfull") }
+        else { console.log("Incorrect") }
+    })
+
+    res.render('signin', { title: 'signin' })
+}
+
+

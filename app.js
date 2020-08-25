@@ -11,6 +11,7 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/static'))
 app.use(partials());
 app.use(middlewares.logger)
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/', routes.homepage)
 
@@ -23,6 +24,11 @@ app.get('/blog', routes.blog)
 app.get('/blogDetails/:slug', routes.blogDetails)
 
 app.get('/about', routes.about)
+
+app.get('/contact', routes.contact)
+
+app.get('/signin', routes.signin)
+app.post('/signin', routes.login)
 
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)

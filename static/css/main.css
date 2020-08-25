@@ -2,13 +2,8 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    /* #ffffff
-    #1f1c18*/
-
 }
 html{
-    background-color: #5f45bb;
-    background-image: linear-gradient(to bottom right, #8e0e00, #1f1c18);
     color: #fff;
     font-family: "Quicksand", sans-serif;
     font-size: 16px;
