@@ -4,6 +4,7 @@ const partials = require('express-partials');
 const { static } = require('express');
 const middlewares = require('./middlewares/appMidleware')
 const routes = require('./routes/index')
+const session = require('express-session')
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
@@ -12,6 +13,12 @@ app.use(express.static(__dirname + '/static'))
 app.use(partials());
 app.use(middlewares.logger)
 app.use(express.urlencoded({ extended: false }))
+app.use(session({
+    secret: 'mohini@93@93',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000000 }
+}))
 
 app.get('/', routes.homepage)
 
@@ -29,6 +36,8 @@ app.get('/contact', routes.contact)
 
 app.get('/signin', routes.signin)
 app.post('/signin', routes.login)
+
+app.get('/dashboard', middlewares.authenticated, routes.dashboard)
 
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)

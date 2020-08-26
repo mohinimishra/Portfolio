@@ -11,3 +11,11 @@ module.exports.errorHandler = (err, req, res, next) => {
     console.log(err)
     res.status(500).send('Something Went Wrong')
 }
+
+module.exports.authenticated = (req, res, next) => {
+    if (req.session.isLoggedIn) {
+        next()
+    } else {
+        res.redirect('/signin')
+    }
+}

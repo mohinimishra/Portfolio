@@ -72,31 +72,43 @@ module.exports.contact = (req, res) => {
 module.exports.signin = (req, res) => {
     res.render('signin', {
         layout: 'layout',
-        title: 'signin'
+        title: 'signin',
+        message: ""
     })
 }
 
 let db = [{
     email: "mohini@gmail.com",
-    password: 12345
+    password: '12345'
 },
 {
     email: "mm@gmail.com",
-    password: 123
+    password: '123'
 }]
 
 module.exports.login = (req, res) => {
     let body = req.body
-    bodyEmail = body.email
-    bodyPass = body.password
-    // dbEmail = db[0].email
-    // dbPass = db[0].password
-    db.forEach((ele) => {
-        if (ele.email == bodyEmail) { console.log("sucessfull") }
-        else { console.log("Incorrect") }
-    })
+    console.log(req.body)
+    let user = db.filter((ele) => ((ele.email === body.email && ele.password === body.password)))
+    if (user.length) {
+        req.session.user = user[0]
+        console.log(req.session.user)
+        req.session.isLoggedIn = true
+        res.redirect('dashboard')
+    } else {
+        res.render('signin', {
+            layout: 'layout',
+            title: 'login',
+            message: 'Email or Password Incorrect'
+        })
+    }
+}
 
-    res.render('signin', { title: 'signin' })
+module.exports.dashboard = (req, res) => {
+    res.render('admin/dashboard', {
+        title: 'dashboard',
+        layout: 'layout'
+    })
 }
 
 
