@@ -18,6 +18,7 @@ module.exports.projects = (req, res) => {
 
 module.exports.projectDetails = (req, res) => {
     let slug = req.params.slug
+    console.log(slug)
     let index = data.projectIndex[slug]
     let project = data.myProjects[index]
     res.render('projectDetails', {
@@ -78,10 +79,12 @@ module.exports.signin = (req, res) => {
 }
 
 let db = [{
+    name: 'mohini',
     email: "mohini@gmail.com",
     password: '12345'
 },
 {
+    name: "MM",
     email: "mm@gmail.com",
     password: '123'
 }]
@@ -92,9 +95,8 @@ module.exports.login = (req, res) => {
     let user = db.filter((ele) => ((ele.email === body.email && ele.password === body.password)))
     if (user.length) {
         req.session.user = user[0]
-        console.log(req.session.user)
         req.session.isLoggedIn = true
-        res.redirect('dashboard')
+        res.redirect('/admin/dashboard')
     } else {
         res.render('signin', {
             layout: 'layout',
@@ -107,8 +109,42 @@ module.exports.login = (req, res) => {
 module.exports.dashboard = (req, res) => {
     res.render('admin/dashboard', {
         title: 'dashboard',
-        layout: 'layout'
+        layout: 'admin/layout',
+        project: data.myProjects
     })
 }
 
+module.exports.dashboardProjects = (req, res) => {
+    res.render('admin/project', {
+        layout: 'admin/layout',
+        title: 'Project',
+        project: data.myProjects
+    })
+}
 
+module.exports.formLayout = (req, res) => {
+    console.log(req.session)
+    let slug = req.params.slug
+    let index = data.projectIndex[slug]
+    let project = data.myProjects[index]
+    let tags = project.tags
+    res.render('admin/formLayout', {
+        layout: 'admin/layout',
+        title: slug,
+        project: project,
+        tags: tags
+    })
+}
+
+module.exports.signOut = (req, res) => {
+    req.session.isLoggedIn = false;
+    console.log(req.session)
+    res.redirect('/signin')
+}
+
+module.exports.addProject = (req, res) => {
+    res.render('admin/addProject', {
+        layout: 'admin/layout',
+        title: 'New Project'
+    })
+}

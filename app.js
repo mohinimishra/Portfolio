@@ -20,6 +20,8 @@ app.use(session({
     cookie: { maxAge: 1000000 }
 }))
 
+app.use(middlewares.authenticated);
+
 app.get('/', routes.homepage)
 
 app.get('/projects', routes.projects)
@@ -37,7 +39,12 @@ app.get('/contact', routes.contact)
 app.get('/signin', routes.signin)
 app.post('/signin', routes.login)
 
-app.get('/dashboard', middlewares.authenticated, routes.dashboard)
+app.get('/admin/dashboard', middlewares.authenticate, routes.dashboard)
+app.get('/admin/project', middlewares.authenticate, routes.dashboardProjects)
+
+app.get('/admin/project/:slug', routes.formLayout)
+app.get('/admin/signout', routes.signOut)
+app.get('/admin/addProject', routes.addProject)
 
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
