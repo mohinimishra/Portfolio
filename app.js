@@ -5,6 +5,11 @@ const { static } = require('express');
 const middlewares = require('./middlewares/appMidleware')
 const routes = require('./routes/index')
 const session = require('express-session')
+const indexRouter = require('./routes/indexRoute')
+const projectRouter = require('./routes/projectRoute')
+const blogRouter = require('./routes/blogRoute')
+const aboutRouter = require('./routes/aboutRoute')
+const adminRouter = require('./routes/adminRoute')
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
@@ -22,29 +27,39 @@ app.use(session({
 
 app.use(middlewares.authenticated);
 
-app.get('/', routes.homepage)
+// app.get('/', routes.homepage)
+// app.get('/contact', routes.contact)
+// app.get('/signin', routes.signin)
+// app.post('/signin', routes.login)
 
-app.get('/projects', routes.projects)
+app.use('/', indexRouter)
+app.use('/projects', projectRouter)
+app.use('/blog', blogRouter)
+app.use('/blogDetails', blogRouter)
+app.use('/about', aboutRouter)
+app.use('/admin', middlewares.authenticated, adminRouter)
 
-app.get('/projects/:slug', routes.projectDetails)
 
-app.get('/blog', routes.blog)
 
-app.get('/blogDetails/:slug', routes.blogDetails)
+// app.get('/projects', routes.projects)
 
-app.get('/about', routes.about)
+// app.get('/projects/:slug', routes.projectDetails)
 
-app.get('/contact', routes.contact)
+// app.get('/blog', routes.blog)
 
-app.get('/signin', routes.signin)
-app.post('/signin', routes.login)
+// app.get('/blogDetails/:slug', routes.blogDetails)
 
-app.get('/admin/dashboard', middlewares.authenticate, routes.dashboard)
-app.get('/admin/project', middlewares.authenticate, routes.dashboardProjects)
+// app.get('/about', routes.about)
 
-app.get('/admin/project/:slug', routes.formLayout)
-app.get('/admin/signout', routes.signOut)
-app.get('/admin/addProject', routes.addProject)
+
+
+
+// app.get('/admin', middlewares.authenticate, routes.dashboard)
+// app.get('/admin/project', middlewares.authenticate, routes.dashboardProjects)
+
+// app.get('/admin/project/:slug', routes.formLayout)
+// app.get('/admin/signout', routes.signOut)
+// app.get('/admin/addProject', routes.addProject)
 
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
