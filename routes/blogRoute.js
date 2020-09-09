@@ -1,38 +1,26 @@
 const router = require('express').Router()
 const data = require('../data').data
+const BlogService = require('../service/blogService')
 
-const mongodb = require('mongodb').MongoClient;
 
-let db;
-mongodb.connect('mongodb://localhost:27017', function (err, client) {
-    if (err) {
-        console.log(err)
-    } else {
-        db = client.db('portfolio')
-    }
-})
+// let blogData = data.myBlog;
+router.get('/', (req, res, next) => {
+    console.log(data)
+    BlogService.blogList().then((data) => {
+        let randumNum = parseInt(Math.random() * data.length)
+        console.log(data.blogCategories)
 
-let blogData = data.myBlog;
-
-router.get('/', (req, res) => {
-    let blogCollection = db.collection('blog')
-    blogCollection.find().toArray((err, data) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log(data)
-            let randumNum = parseInt(Math.random() * blogData.length)
-            res.render('blog', {
-                layout: 'layout',
-                title: 'blog',
-                featuredBlog: data[randumNum],
-                data,
-                categories: data.blogCategories
-            })
-        }
+        res.render('blog', {
+            layout: 'layout',
+            title: 'blog',
+            featuredBlog: data[randumNum],
+            data,
+            categories: data.blogCategories
+        })
     })
 
 })
+
 
 router.get('/:slug', (req, res) => {
     let slug = req.params.slug

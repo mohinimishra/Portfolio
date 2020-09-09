@@ -1,28 +1,30 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 ">
-    <h1 class="h2"><%= project.name %></h1>
+    <h1 class="h2">Blog</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
-            <a href="/admin/addProject"><button class="btn btn-sm btn-outline-secondary">Create New</button></a>
-            <button class="btn btn-sm btn-outline-secondary">Delete</button>
+            <button class="btn btn-sm btn-outline-secondary">Share</button>
+            <button class="btn btn-sm btn-outline-secondary">Export</button>
         </div>
-        <button class="btn btn-sm btn-outline-secondary">
-            Upload Demo
+        <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
         </button>
     </div>
 
 </div>
-<form class="needs-validation" novalidate>
+
+<form class="needs-validation" method="Post" action="/admin/add-blog">
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <label for="validationCustom01">Name</label>
-            <input type="text" class="form-control" id="validationCustom01" value="<%= project.name %>" required>
+            <input type="text" name="name" class="form-control" id="validationCustom01">
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationCustom02">Alies</label>
-            <input type="text" class="form-control" id="validationCustom02" value="<%= project.alias %>" disabled>
+            <label for="validationCustom02">Slug</label>
+            <input type="text" name="slug" class="form-control" id="validationCustom02" disabled>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -31,15 +33,14 @@
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <label for="validationCustom01">GithubUrl</label>
-            <input type="text" class="form-control" id="validationCustom01" value="<%= project.githubUrl %>" required>
+            <input type="text" class="form-control" name="githubUrl" id="validationCustom01" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
             <label for="validationCustom02">tags</label>
-            <input type="text" class="form-control" id="validationCustom02" value="<% tags.forEach((ele)=>{ %><%= ele.name %> ,
-<%}) %>" required>
+            <input type="text" class="form-control" name="tags" id="validationCustom02" required>
 
         </div>
     </div>
@@ -47,12 +48,13 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                    cols="10"><%= project.description %></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"
+                    cols="10"></textarea>
 
             </div>
         </div>
     </div>
+
     <button class="btn btn-primary" type="submit">Submit form</button>
 </form>
 

@@ -1,30 +1,28 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 ">
-    <h1 class="h2">Dashboard</h1>
+    <h1 class="h2"><%= project.name %></h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group mr-2">
-            <button class="btn btn-sm btn-outline-secondary">Share</button>
-            <button class="btn btn-sm btn-outline-secondary">Export</button>
+        <div class=" mr-2">
+            <a href="/admin/addProject" class="btn btn-sm btn-outline-secondary px-2">Create New</a>
+            <a class="btn btn-sm btn-outline-secondary" href="/admin/project/<%= project.slug %>/delete">Delete</a>
         </div>
-        <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>
-            This week
+        <button class="btn btn-sm btn-outline-secondary">
+            Upload Demo
         </button>
     </div>
 
 </div>
-
-<form class="needs-validation" method="Post" action="/admin/add-project">
+<form class="needs-validation" novalidate>
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <label for="validationCustom01">Name</label>
-            <input type="text" name="name" class="form-control" id="validationCustom01">
+            <input type="text" class="form-control" id="validationCustom01" value="<%= project.name %>" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationCustom02">Slug</label>
-            <input type="text" class="form-control" id="validationCustom02" disabled>
+            <label for="validationCustom02">Alies</label>
+            <input type="text" class="form-control" id="validationCustom02" value="<%= project.slug %>" disabled>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -33,14 +31,15 @@
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <label for="validationCustom01">GithubUrl</label>
-            <input type="text" class="form-control" name="githubUrl" id="validationCustom01" required>
+            <input type="text" class="form-control" id="validationCustom01" value="<%= project.githubUrl %>" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
             <label for="validationCustom02">tags</label>
-            <input type="text" class="form-control" name="tags" id="validationCustom02" required>
+            <input type="text" class="form-control" id="validationCustom02" value="<% tags.forEach((ele)=>{ %><%= ele.name %> ,
+<%}) %>" required>
 
         </div>
     </div>
@@ -48,8 +47,8 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"
-                    cols="10"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                    cols="10"><%= project.description %></textarea>
 
             </div>
         </div>

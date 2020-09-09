@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const partials = require('express-partials');
 const { static } = require('express');
+const mongoose = require('mongoose')
 const middlewares = require('./middlewares/appMidleware')
 const routes = require('./routes/index')
 const session = require('express-session')
@@ -10,6 +11,11 @@ const projectRouter = require('./routes/projectRoute')
 const blogRouter = require('./routes/blogRoute')
 const aboutRouter = require('./routes/aboutRoute')
 const adminRouter = require('./routes/adminRoute')
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/portfolio', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('DB connected Successfully'))
+    .catch((err) => console.log('DB connection failed.', err))
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
