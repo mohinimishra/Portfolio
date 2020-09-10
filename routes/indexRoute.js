@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const UserService = require('../service/userService')
 
 router.get('/', (req, res) => {
     res.render('portfolio', {
@@ -49,6 +50,24 @@ router.post('/signin', (req, res) => {
             message: 'Email or Password Incorrect'
         })
     }
+})
+
+router.get('/signUp', (req, res) => {
+    res.render('signUp', {
+        layout: 'layout',
+        title: 'SignUp',
+        message: ""
+    })
+})
+
+router.post('/signUp', (req, res, next) => {
+    let body = req.body;
+    console.log(req.body)
+    UserService.addUser(body).then((data) => {
+        res.redirect('/signin')
+    }).catch((err) => {
+        next(err)
+    })
 })
 
 

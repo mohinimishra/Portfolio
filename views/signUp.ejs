@@ -1,0 +1,70 @@
+<form class="form-signin" method="post" action="/signUp">
+    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Please sign Up Here</h1>
+    <% if(message != ""){ %>
+    <div class="alert alert-danger" role="alert">
+        <%= message%>
+    </div>
+    <% } %>
+    <label for="inputEmail" class="sr-only">Name</label>
+    <input type="text" id="inputText" class="form-control" name="name" placeholder="Name" required autofocus>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required
+        autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+    <label for="inputNumber" class="sr-only">mobile</label>
+    <input type="Number" id="inputNumber" class="form-control" name="number" placeholder="Number" required autofocus>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Done</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <form>
+    <div class="form-group row">
+        <label for="inputText" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputText" placeholder="Name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-6">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-6">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputNumber" class="col-sm-2 col-form-label">Mobile</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" id="inputNumber" placeholder="Mobile">
+        </div>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+</form> -->
