@@ -51,7 +51,13 @@ router.get('/project/:slug/delete', function (req, res, next) {
     }).catch(err => next(err))
 })
 
-
+router.get('/blog/:slug/delete', (req, res, next) => {
+    BlogService.deleteBlog(req.params.slug).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
+    })
+})
 
 router.get('/blog', (req, res, next) => {
     BlogService.blogList().then((data) => {
@@ -59,12 +65,27 @@ router.get('/blog', (req, res, next) => {
             layout: '/admin/layout',
             title: 'blog',
             data: data
-        }).catch((err) => {
-            next(err)
         })
+    }).catch((err) => {
+        next(err)
     })
-
 })
+
+router.get('/blog/:slug', (req, res, next) => {
+    let slug = req.params.slug;
+    let tags = data.tags
+    BlogService.blogDetail(slug).then((data) => {
+        res.render('admin/blogDetail', {
+            layout: 'admin/layout',
+            data: data,
+            title: slug,
+            tags: tags
+        })
+    }).catch((err) => {
+        next(err)
+    })
+})
+
 
 router.get('/signout', (req, res) => {
     req.session.isLoggedIn = false;
@@ -78,50 +99,45 @@ router.get('/addProject', (req, res) => {
         title: 'New Project'
     })
 })
-
-
 router.post('/add-project', (req, res, next) => {
     let data = req.body;
-    data.slug = data.name.split(' ').join('-').toLowerCase();
 
+    data.slug = data.name.split(' ').join('-').toLowerCase();
     // tag section
     let t = data.tags.split(',');
-    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
+    let classes = ['success', 'danger', 'info', 'warning'];
     data.tags = t.map((ele, i) => {
         return { name: ele, class: classes[i] }
     });
-
+    // related projects
     ProjectService.create(data).then((data) => {
         res.redirect('/admin/project')
     }).catch((err) => {
         next(err)
     })
-
 })
-
 router.get('/addBlog', (req, res) => {
     res.render('admin/addBlog', {
         layout: 'admin/layout',
         title: 'New Blog'
     })
 })
-
 router.post('/add-blog', (req, res, next) => {
+
     let data = req.body;
-    console.log(data)
     data.slug = data.name.split(' ').join('-').toLowerCase();
-
-    // let classes = ['primar', 'success', 'danger', 'info', 'warning'];
-    // let random = parseInt(Math.random() * classes.length)
-    // let randomClass = classes[random]
-    // data.tags = { name: , class: randomClass }
-
+    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
+    let random = parseInt(Math.random() * classes.length)
+    let randomClass = classes[random]
+    data.tags = { name: data.tags, class: randomClass }
     BlogService.create(data).then((data) => {
         res.redirect('/admin/blog')
     }).catch((err) => {
         next(err)
     })
 })
+
+
 
 
 module.exports = router;

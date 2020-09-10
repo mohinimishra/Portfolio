@@ -16,7 +16,6 @@ const blogSchema = new Schema({
         name: String,
         link: String
     }],
-    blogCategories: [String],
     imageSlider: [String],
     createdOn: { type: Date, default: Date.now },
     updatedOn: { type: Date },

@@ -15,7 +15,8 @@ module.exports.errorHandler = (err, req, res, next) => {
 module.exports.authenticate = (req, res, next) => {
     if (req.session.isLoggedIn) {
         next()
-    } else {
+    }
+    else {
         res.redirect('/signin')
     }
 }

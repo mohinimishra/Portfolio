@@ -1,21 +1,22 @@
 const router = require('express').Router()
-const data = require('../data').data
+// const data = require('../data').data
 const BlogService = require('../service/blogService')
 
 
 // let blogData = data.myBlog;
 router.get('/', (req, res, next) => {
-    console.log(data)
     BlogService.blogList().then((data) => {
+        console.log('Db Data', data)
+
         let randumNum = parseInt(Math.random() * data.length)
-        console.log(data.blogCategories)
+        // console.log(data.blogCategories)
 
         res.render('blog', {
             layout: 'layout',
             title: 'blog',
             featuredBlog: data[randumNum],
             data,
-            categories: data.blogCategories
+            // categories: data.blogCategories
         })
     })
 
@@ -29,7 +30,7 @@ router.get('/:slug', (req, res) => {
     res.render('blogDetails', {
         layout: 'layout',
         title: slug,
-        categories: data.blogCategories,
+        // categories: data.blogCategories,
         data: blog
     })
 })
