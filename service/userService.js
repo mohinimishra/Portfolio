@@ -6,7 +6,7 @@ module.exports.addUser = function (data) {
         newUser.save().then((data) => {
             resolve(data)
         }).catch((err) => {
-            reject(data)
+            reject(err)
         })
     })
 }
