@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 const UserSchema = new Schema({
     name: { type: String, required: true, trim: true },
-    emailId: { type: String, unique: true },
+    emailId: { type: String, unique: true, required: true },
     password: { type: String, required: true, minlength: 6 },
     mobile: { type: Number, require: true },
     createdOn: { type: Date, default: Date.now },
@@ -22,7 +22,6 @@ UserSchema.pre('save', function (next) {
     }
 })
 
-
 UserSchema.methods = {
     encryptPass: function (plainPassword) {
         if (!plainPassword) {
@@ -32,7 +31,7 @@ UserSchema.methods = {
         }
     },
 
-    comparePass: function () {
+    comparePass: function (plainPassword) {
         return bcrypt.compareSync(plainPassword, this.password)
     }
 }

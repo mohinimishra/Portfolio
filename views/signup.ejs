@@ -1,6 +1,6 @@
-<form class="form-signin" method="post" action="/signUp">
+<form class="form-signin" method="post" action="/signup">
     <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal text-center">Please sign Up Here</h1>
+    <h1 class="h3 mb-3 font-weight-normal text-center">Create Acoount </h1>
     <% if(message != ""){ %>
     <div class="alert alert-danger" role="alert">
         <%= message%>
@@ -16,11 +16,11 @@
     <label for="inputNumber" class="sr-only">mobile</label>
     <input type="Number" id="inputNumber" class="form-control" name="number" placeholder="Number" required autofocus>
     <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
+
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Done</button>
+
+    <p class="pt-3">Already have an account ? <a href="/signin">Login here</a></p>
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 </form>
 

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const UserService = require('../service/userService')
+const ContactService = require('../service/contactService')
+const User = require('../models/userSchema')
 
 router.get('/', (req, res) => {
     res.render('portfolio', {
@@ -35,32 +37,42 @@ let db = [{
     password: '123'
 }]
 
-router.post('/signin', (req, res) => {
+router.post('/signin', (req, res, next) => {
     let body = req.body
     console.log(req.body)
-    let user = db.filter((ele) => ((ele.email === body.email && ele.password === body.password)))
-    if (user.length) {
-        req.session.user = user[0]
-        req.session.isLoggedIn = true
-        res.redirect('/admin')
-    } else {
-        res.render('signin', {
-            layout: 'layout',
-            title: 'login',
-            message: 'Email or Password Incorrect'
-        })
-    }
+    User.findOne({ emailId: body.email }).then(data => {
+        console.log('DB', data)
+        if (data) {
+            if (!data.comparePass(body.password)) {
+                res.render('signin', {
+                    layout: 'layout',
+                    title: 'login',
+                    message: 'Email or Password Incorrect'
+                })
+            } else {
+                req.session.user = data
+                req.session.isLoggedIn = true
+                res.redirect('/admin')
+            }
+        } else {
+            res.render('signin', {
+                layout: 'layout',
+                title: 'login',
+                message: 'Email or Password Incorrect'
+            })
+        }
+    }).catch(err => next(err))
 })
 
-router.get('/signUp', (req, res) => {
-    res.render('signUp', {
+router.get('/signup', (req, res) => {
+    res.render('signup', {
         layout: 'layout',
-        title: 'SignUp',
+        title: 'Signup',
         message: ""
     })
 })
 
-router.post('/signUp', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
     let body = req.body;
     console.log(req.body)
     UserService.addUser(body).then((data) => {
@@ -70,6 +82,14 @@ router.post('/signUp', (req, res, next) => {
     })
 })
 
+router.post('/contact', (req, res, next) => {
+    let body = req.body
+    ContactService.addContactInfo(body).then((data) => {
+        res.status(201).json({ message: "Contact saved successfully" })
+    }).catch((err) => {
+        next(err)
+    })
+})
 
 
 module.exports = router;

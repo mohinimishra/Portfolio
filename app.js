@@ -24,6 +24,7 @@ app.use(express.static(__dirname + '/static'))
 app.use(partials());
 app.use(middlewares.logger)
 app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 app.use(session({
     secret: 'mohini@93@93',
     resave: false,
