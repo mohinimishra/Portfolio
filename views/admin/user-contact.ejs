@@ -20,16 +20,16 @@
             </tr>
         </thead>
         <tbody>
-            <!-- <% data.forEach((ele, index)=>{ %> -->
+            <% data.forEach((ele, index)=>{ %>
             <tr>
                 <td><%= index +1 %></td>
-                <!-- <td><a href="blog/<%= ele.slug%>"><%= ele.name %></a></td> -->
-                <!-- <td><a href="<%= ele.githubUrl %>">Github</a></td>
-                <td><a href="#">Header</a></td> -->
-
+                <td><%= ele.name %></td>
+                <td><%= ele.email %></td>
+                <td><%= ele.mobile %></td>
+                <td><%= ele.description %></td>
 
             </tr>
-            <!-- <% }) %> -->
+            <% }) %>
 
         </tbody>
     </table>

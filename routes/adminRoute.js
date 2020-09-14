@@ -3,6 +3,7 @@ const data = require('../data').data;
 const Project = require('../models/projectSchema')
 const ProjectService = require('../service/projectService')
 const BlogService = require('../service/blogService')
+const ContactService = require('../service/contactService')
 
 router.get('/', (req, res, next) => {
     ProjectService.projectList().then((data) => {
@@ -137,7 +138,16 @@ router.post('/add-blog', (req, res, next) => {
     })
 })
 
-router.get('/user-contact')
+router.get('/user-contact', (req, res, next) => {
+    ContactService.contactDetail().then((data) => {
+        res.render('admin/user-contact', {
+            layout: 'admin/layout',
+            title: "User's Information",
+            data: data
+        })
+    })
+
+})
 
 
 

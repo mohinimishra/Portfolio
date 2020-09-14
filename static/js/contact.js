@@ -8,7 +8,6 @@ let msg = document.querySelector('#msg')
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
-
     let data = {
         name: name.value,
         email: email.value,
@@ -29,13 +28,12 @@ form.addEventListener('submit', function (e) {
         let p = document.createElement('p');
         p.innerHTML = parseData.message;
         p.className = "alert alert-success";
-        console.log(parseData)
         msg.appendChild(p)
+        form.reset()
 
+    }).catch((err) => {
+        console.log(err)
     })
-        .catch((err) => {
-            console.log(err)
-        })
 
 })
 

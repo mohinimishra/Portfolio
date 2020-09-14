@@ -10,3 +10,13 @@ module.exports.addContactInfo = function (data) {
         })
     })
 }
+
+module.exports.contactDetail = function () {
+    return new Promise((resolve, reject) => {
+        Contact.find().then((data) => {
+            resolve(data)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
