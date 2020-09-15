@@ -3,7 +3,26 @@ const data = require('../data').data;
 const Project = require('../models/projectSchema')
 const ProjectService = require('../service/projectService')
 const BlogService = require('../service/blogService')
-const ContactService = require('../service/contactService')
+const ContactService = require('../service/contactService');
+const multer = require('multer');
+const path = require('path')
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../static/image'))
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+const upload = multer({
+    storage: storage
+})
+
+
+
 
 router.get('/', (req, res, next) => {
     ProjectService.projectList().then((data) => {
@@ -46,6 +65,25 @@ router.get('/project/:slug', (req, res, next) => {
     })
 })
 
+router.post('/project/:slug/update', function (req, res, next) {
+    let data = req.body;
+    // console.log(data)
+    // data.slug = data.name.split(' ').join('-').toLowerCase();
+    console.log('parms', req.params.slug)
+    // tag section
+    let t = data.tags.split(',');
+    let classes = ['success', 'danger', 'info', 'warning'];
+    data.tags = t.map((ele, i) => {
+        return { name: ele, class: classes[i] }
+    });
+    // related projects
+    ProjectService.updateProject(req.params.slug, data).then((data) => {
+        res.redirect('/admin/project')
+    }).catch((err) => {
+        next(err)
+    })
+})
+
 router.get('/project/:slug/delete', function (req, res, next) {
     ProjectService.deleteProject(req.params.slug).then(d => {
         res.redirect('/admin/project')
@@ -59,6 +97,30 @@ router.get('/blog/:slug/delete', (req, res, next) => {
         next(err)
     })
 })
+
+
+
+router.get('/project/:slug/upload', function (req, res, next) {
+    res.render('admin/upload', {
+        layout: '/admin/layout',
+        title: 'Upload',
+        path: `/admin/project/${req.params.slug}/upload-image`
+    })
+})
+
+
+router.post('/project/:slug/upload-image', upload.single('img'), (req, res, next) => {
+    console.log(req.body);
+
+    console.log(req.file)
+
+    ProjectService.updateProject(req.params.slug, { image: `/image/${req.file.originalname}` }).then(dt => {
+        res.redirect('/admin/project')
+
+    }).catch(err => next(err))
+
+})
+
 
 router.get('/blog', (req, res, next) => {
     BlogService.blogList().then((data) => {
@@ -139,7 +201,7 @@ router.post('/add-blog', (req, res, next) => {
 })
 
 router.get('/user-contact', (req, res, next) => {
-    ContactService.contactDetail().then((data) => {
+    ContactService.contactList().then((data) => {
         res.render('admin/user-contact', {
             layout: 'admin/layout',
             title: "User's Information",
@@ -149,6 +211,7 @@ router.get('/user-contact', (req, res, next) => {
 
 })
 
+router.post('/project')
 
 
 

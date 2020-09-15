@@ -11,18 +11,18 @@
     </div>
 
 </div>
-<form class="needs-validation" novalidate>
+<form class="needs-validation" method="Post" action="/admin/project/<%= project.slug %>/update">
     <div class="form-row">
         <div class="col-md-6 mb-3">
-            <label for="validationCustom01">Name</label>
-            <input type="text" class="form-control" id="validationCustom01" value="<%= project.name %>" required>
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" value="<%= project.name %>" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationCustom02">Alies</label>
-            <input type="text" class="form-control" id="validationCustom02" value="<%= project.slug %>" disabled>
+            <label for="validationCustom02">Slug</label>
+            <input type="text" name="slug" class="form-control" id="slug" value="<%= project.slug %>" disabled>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -31,14 +31,15 @@
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <label for="validationCustom01">GithubUrl</label>
-            <input type="text" class="form-control" id="validationCustom01" value="<%= project.githubUrl %>" required>
+            <input type="text" class="form-control" name="githubUrl" id="validationCustom01"
+                value="<%= project.githubUrl %>" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationCustom02">tags</label>
-            <input type="text" class="form-control" id="validationCustom02" value="<% tags.forEach((ele)=>{ %><%= ele.name %> ,
+            <label for="tags">tags</label>
+            <input type="text" class="form-control" name="tags" id="validationCustom02" value="<% tags.forEach((ele)=>{ %><%= ele.name %> ,
 <%}) %>" required>
 
         </div>
@@ -46,14 +47,36 @@
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description" rows="3"
                     cols="10"><%= project.description %></textarea>
 
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <% if(project.image) {%>
+            <img src="<%= project.image%>" alt="" srcset="">
+            <a href="/admin/project/<%= project.slug %>/upload">Change Image</a>
+
+            <%} else {%>
+
+            <a href="/admin/project/<%= project.slug %>/upload">Upload Image</a>
+
+            <% } %>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <button class="btn btn-primary" type="submit">Update</button>
 </form>
 
 <script>

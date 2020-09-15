@@ -33,6 +33,17 @@ module.exports.create = function (data) {
     })
 }
 
+module.exports.updateProject = function (slug, data) {
+    return new Promise((resolve, reject) => {
+        Project.findOneAndUpdate({ slug: slug }, { $set: data }).then((data) => {
+            resolve(data)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
 module.exports.deleteProject = function (slug) {
     return new Promise((resolve, reject) => {
         Project.findOneAndDelete({ slug: slug }).then(d => {

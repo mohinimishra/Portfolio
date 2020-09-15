@@ -11,7 +11,7 @@ module.exports.addContactInfo = function (data) {
     })
 }
 
-module.exports.contactDetail = function () {
+module.exports.contactList = function () {
     return new Promise((resolve, reject) => {
         Contact.find().then((data) => {
             resolve(data)

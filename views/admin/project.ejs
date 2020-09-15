@@ -21,7 +21,7 @@
             <% project.forEach((ele, index)=>{ %>
             <tr>
                 <td><%= index +1 %></td>
-                <td><img src="/image/images.jpeg" width="80px" height="80px"></td>
+                <td><img src="<%= ele.image %>" width="80px" height="80px"></td>
                 <td><a href="project/<%= ele.slug%>"><%= ele.name %></a></td>
                 <td><a href="<%= ele.githubUrl %>">Github</a></td>
                 <td><a href="#">Header</a></td>
