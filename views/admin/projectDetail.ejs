@@ -57,7 +57,7 @@
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <% if(project.image) {%>
-            <img src="<%= project.image%>" alt="" srcset="">
+            <img src="<%= project.image%>" width="90px" height="90px" alt="" srcset="">
             <a href="/admin/project/<%= project.slug %>/upload">Change Image</a>
 
             <%} else {%>

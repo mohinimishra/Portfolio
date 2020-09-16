@@ -42,3 +42,13 @@ module.exports.deleteBlog = function (slug) {
         })
     })
 }
+
+module.exports.updateBlog = function (slug, data) {
+    return new Promise((resolve, reject) => {
+        Blog.findOneAndUpdate({ slug: slug }, { $set: data }).then((d) => {
+            resolve(d)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}

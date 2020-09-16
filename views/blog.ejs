@@ -21,9 +21,9 @@
 
                     <div class="mb-1 text-muted">Nov 12</div>
                     <p class="card-text mb-auto"><%= ele.description%></p>
-                    <a href="/blogDetails/<%=ele.alias%>">Continue reading</a>
+                    <a href="/blogDetails/<%=ele.slug%>">Continue reading</a>
                 </div>
-                <img src="/image/images.jpeg" alt="" srcset="">
+                <img src="<%= ele.image %>" width="80px" height="80px" class='mt-5' alt="" srcset="">
             </div>
         </div>
         <% })%>

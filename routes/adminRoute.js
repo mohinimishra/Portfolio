@@ -5,7 +5,8 @@ const ProjectService = require('../service/projectService')
 const BlogService = require('../service/blogService')
 const ContactService = require('../service/contactService');
 const multer = require('multer');
-const path = require('path')
+const path = require('path');
+const { route } = require('./indexRoute');
 
 
 const storage = multer.diskStorage({
@@ -69,7 +70,7 @@ router.post('/project/:slug/update', function (req, res, next) {
     let data = req.body;
     // console.log(data)
     // data.slug = data.name.split(' ').join('-').toLowerCase();
-    console.log('parms', req.params.slug)
+    // console.log('parms', req.params.slug)
     // tag section
     let t = data.tags.split(',');
     let classes = ['success', 'danger', 'info', 'warning'];
@@ -98,7 +99,20 @@ router.get('/blog/:slug/delete', (req, res, next) => {
     })
 })
 
+router.post('/blog/:slug/update', (req, res, next) => {
+    let data = req.body;
+    // data.slug = data.name.split(' ').join('-').toLowerCase();
+    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
+    let random = parseInt(Math.random() * classes.length)
+    let randomClass = classes[random]
+    data.tags = { name: data.tags, class: randomClass }
+    BlogService.updateBlog(req.params.slug, data).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
+    })
 
+})
 
 router.get('/project/:slug/upload', function (req, res, next) {
     res.render('admin/upload', {
@@ -149,6 +163,19 @@ router.get('/blog/:slug', (req, res, next) => {
     })
 })
 
+router.get('/blog/:slug/upload', function (req, res, next) {
+    res.render('admin/upload', {
+        layout: '/admin/layout',
+        title: upload,
+        path: `/admin/blog/${req.params.slug}/upload-image`
+    })
+})
+
+router.post('/blog/:slug/upload-image', upload.single('img'), (req, res, next) => {
+    BlogService.updateBlog(req.params.slug, { image: `/image/${req.file.originalname}` }).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch(err => next(err))
+})
 
 router.get('/signout', (req, res) => {
     req.session.isLoggedIn = false;

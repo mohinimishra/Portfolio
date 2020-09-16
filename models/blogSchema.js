@@ -6,7 +6,7 @@ const blogSchema = new Schema({
     slug: { type: String, required: true, unique: true },
     description: { type: String },
     githubUrl: { type: String, trim: true },
-    images: { type: String, trim: true },
+    image: { type: String, trim: true },
     tags: {
         name: String,
         class: String
@@ -15,7 +15,6 @@ const blogSchema = new Schema({
         name: String,
         link: String
     }],
-    imageSlider: [String],
     createdOn: { type: Date, default: Date.now },
     updatedOn: { type: Date },
     status: { type: String, enum: ['active', 'inactive'], default: 'active' }

@@ -1,20 +1,6 @@
 <div class="container py-3 bg-light">
     <div class="row">
-        <div class="col-md-3 project-sidebar">
-            <h6>Categories</h6>
-            <% categories.forEach((ele) =>{ %>
-            <div class="project-sidebar-link"><a href="#"><%= ele%></a></div>
-            <% })%>
 
-            <hr>
-            <h6>Archives</h6>
-            <div class="project-sidebar-link"><a href="#">June 2020</a></div>
-            <div class="project-sidebar-link"><a href="#">May 2020</a></div>
-            <div class="project-sidebar-link"><a href="#">April 2020</a></div>
-            <div class="project-sidebar-link"><a href="#">March 2020</a></div>
-            <div class="project-sidebar-link"><a href="#">February 2020</a></div>
-            <div class="project-sidebar-link"><a href="#">January 2020</a></div>
-        </div>
         <div class="col-md-9">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -26,7 +12,7 @@
             <h1><%= data.name%></h1>
             <p><%= data.description %>
             </p>
-            <img src="/image/images.jpeg"> <br>
+            <img src="<%= data.image%>" width="80px" height="80px"> <br>
             <small>Watch a live demo <a href="#">Here</a></small>
         </div>
     </div>

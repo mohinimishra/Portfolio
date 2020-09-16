@@ -11,18 +11,19 @@
     </div>
 
 </div>
-<form class="needs-validation" novalidate>
+<form class="needs-validation" method="Post" action="/admin/blog/<%= data.slug%>/update">
     <div class="form-row">
         <div class="col-md-6 mb-3">
-            <label for="validationCustom01">Name</label>
-            <input type="text" class="form-control" id="validationCustom01" value="<%= data.name %>" required>
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="validationCustom01" value="<%= data.name %>"
+                required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationCustom02">Slug</label>
-            <input type="text" class="form-control" id="validationCustom02" value="<%= data.slug %>" disabled>
+            <label for="slug">Slug</label>
+            <input type="text" class="form-control" name="slug" id="slug" value="<%= data.slug %>" disabled>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -30,25 +31,40 @@
     </div>
     <div class="form-row">
         <div class="col-md-6 mb-3">
-            <label for="validationCustom01">GithubUrl</label>
-            <input type="text" class="form-control" id="validationCustom01" value="<%= data.githubUrl %>" required>
+            <label for="githubUrl">GithubUrl</label>
+            <input type="text" class="form-control" name="githubUrl" id="validationCustom01"
+                value="<%= data.githubUrl %>" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationCustom02">tag</label>
-            <input type="text" class="form-control" id="validationCustom02" value="<%= data.tags.name %>" required>
+            <label for="tags">tag</label>
+            <input type="text" class="form-control" id="tag" name="tags" value="<%= data.tags.name %>" required>
 
         </div>
     </div>
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description" rows="3"
                     cols="10"><%= data.description %></textarea>
 
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-6 mb-3 ml-5 mt-4">
+                <% if(data.image) {%>
+                <img src="<%= data.image%>" width=" 80px" height="80px" alt="" srcset="">
+                <a href="/admin/blog/<%= data.slug %>/upload">Change Image</a>
+
+                <%} else {%>
+
+                <a href="/admin/blog/<%= data.slug %>/upload">Upload Image</a>
+
+                <% } %>
             </div>
         </div>
     </div>

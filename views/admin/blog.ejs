@@ -14,7 +14,7 @@
                 <th>No.</th>
                 <th>Project</th>
                 <th>Github Link</th>
-                <th>Header</th>
+                <th>Image</th>
             </tr>
         </thead>
         <tbody>
@@ -23,9 +23,7 @@
                 <td><%= index +1 %></td>
                 <td><a href="blog/<%= ele.slug%>"><%= ele.name %></a></td>
                 <td><a href="<%= ele.githubUrl %>">Github</a></td>
-                <td><a href="#">Header</a></td>
-
-
+                <td><img src="<%= ele.image %>" width="80px" height="80px"></td>
             </tr>
             <% }) %>
 
