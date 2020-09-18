@@ -7,6 +7,7 @@ const ContactService = require('../service/contactService');
 const multer = require('multer');
 const path = require('path');
 const { route } = require('./indexRoute');
+const uploadDemo = require('../service/uploadDemo');
 
 
 const storage = multer.diskStorage({
@@ -21,9 +22,6 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage
 })
-
-
-
 
 router.get('/', (req, res, next) => {
     ProjectService.projectList().then((data) => {
@@ -122,19 +120,43 @@ router.get('/project/:slug/upload', function (req, res, next) {
     })
 })
 
+router.get('/project/:slug/upload-demo', function (req, res, next) {
+    res.render('admin/upload', {
+        layout: '/admin/layout',
+        title: 'Upload-demo',
+        path: `/admin/project/${req.params.slug}/upload-demo`
+    })
+})
 
-router.post('/project/:slug/upload-image', upload.single('img'), (req, res, next) => {
-    console.log(req.body);
 
-    console.log(req.file)
+router.post('/project/:slug/upload-demo', function (req, res, next) {
 
-    ProjectService.updateProject(req.params.slug, { image: `/image/${req.file.originalname}` }).then(dt => {
-        res.redirect('/admin/project')
+    let filename = `${req.params.slug}.zip`;
+    let directoryName = path.join(__dirname, `../static/projects/${req.params.slug}`);
 
-    }).catch(err => next(err))
+
+    console.log(directoryName);
+    console.log(filename)
+
+
+    function uploaded(err, succ) {
+        if (err) {
+            next(err)
+        } else {
+            console.log('uploaded')
+        }
+    }
+
+
+    uploadDemo.upload(req, res, filename, directoryName, uploaded);
 
 })
 
+router.post('/project/:slug/upload-image', upload.single('img'), (req, res, next) => {
+    ProjectService.updateProject(req.params.slug, { image: `/image/${req.file.originalname}` }).then(dt => {
+        res.redirect('/admin/project')
+    }).catch(err => next(err))
+})
 
 router.get('/blog', (req, res, next) => {
     BlogService.blogList().then((data) => {
@@ -183,12 +205,19 @@ router.get('/signout', (req, res) => {
     res.redirect('/signin')
 })
 
-router.get('/addProject', (req, res) => {
-    res.render('admin/addProject', {
-        layout: 'admin/layout',
-        title: 'New Project'
+router.get('/addProject', (req, res, next) => {
+    ProjectService.projectList().then((data) => {
+        res.render('admin/addProject', {
+            layout: 'admin/layout',
+            title: 'New Project',
+            data: data
+        })
+    }).catch((err) => {
+        next(err)
     })
+
 })
+
 router.post('/add-project', (req, res, next) => {
     let data = req.body;
 
@@ -206,12 +235,14 @@ router.post('/add-project', (req, res, next) => {
         next(err)
     })
 })
+
 router.get('/addBlog', (req, res) => {
     res.render('admin/addBlog', {
         layout: 'admin/layout',
         title: 'New Blog'
     })
 })
+
 router.post('/add-blog', (req, res, next) => {
 
     let data = req.body;
@@ -235,11 +266,14 @@ router.get('/user-contact', (req, res, next) => {
             data: data
         })
     })
-
 })
 
-router.post('/project')
-
-
+router.get('/user-contact/:_id/delete', (req, res, next) => {
+    ContactService.delete(req.params._id).then((data) => {
+        res.redirect('/admin/user-contact')
+    }).catch((err) => {
+        next(err)
+    })
+})
 
 module.exports = router;

@@ -7,7 +7,6 @@
                 <th>Email Id</th>
                 <th>Mobile</th>
                 <th>Description</th>
-
             </tr>
         </thead>
         <tbody>
@@ -18,7 +17,8 @@
                 <td><%= ele.email %></td>
                 <td><%= ele.mobile %></td>
                 <td><%= ele.description %></td>
-
+                <td><a href="/admin/user-contact/<%= ele._id %>/delete"><i class="fa fa-trash"
+                            style="font-size:20px; color: black;"></i></a></td>
             </tr>
             <% }) %>
 

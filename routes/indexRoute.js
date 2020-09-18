@@ -26,17 +26,6 @@ router.get('/signin', (req, res) => {
     })
 })
 
-let db = [{
-    name: 'mohini',
-    email: "mohini@gmail.com",
-    password: '12345'
-},
-{
-    name: "MM",
-    email: "mm@gmail.com",
-    password: '123'
-}]
-
 router.post('/signin', (req, res, next) => {
     let body = req.body
     console.log(req.body)

@@ -19,10 +19,10 @@ mongoose.connect('mongodb://localhost:27017/portfolio', { useNewUrlParser: true,
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
+app.use(middlewares.logger)
 
 app.use(express.static(__dirname + '/static'))
 app.use(partials());
-app.use(middlewares.logger)
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(session({
@@ -40,7 +40,7 @@ app.use(middlewares.authenticated);
 // app.post('/signin', routes.login)
 
 app.use('/', indexRouter)
-app.use('/projects', projectRouter)
+app.use('/project', projectRouter)
 app.use('/blog', blogRouter)
 app.use('/blogDetails', blogRouter)
 app.use('/about', aboutRouter)
