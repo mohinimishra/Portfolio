@@ -10,8 +10,6 @@ function upload(req, res, fn, dN, cb) {
         cb(error, null)
     }
 
-
-
     let storage = multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, dN)

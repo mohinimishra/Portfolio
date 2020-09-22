@@ -1,35 +1,47 @@
 const Project = require('../models/projectSchema');
+const axios = require('axios');
+// module.exports.projectList = function () {
+//     return new Promise((resolve, reject) => {
+//         Project.find().then((dt) => {
+//             resolve(dt)
+//         }).catch((err) => {
+//             reject(err)
+//         })
+//     })
+// }
 
 module.exports.projectList = function () {
     return new Promise((resolve, reject) => {
-        Project.find().then((dt) => {
-            resolve(dt)
-        }).catch((err) => {
-            reject(err)
-        })
+        axios.get('http://localhost:4000/api/projects').then((resp) => {
+            console.log(resp)
+            resolve(resp.data.data)
+        }).catch(err => reject(err))
     })
 }
 
 module.exports.projectDetails = function (slug) {
     return new Promise((resolve, reject) => {
-        Project.findOne({ slug: slug }).then(data => {
-            resolve(data)
-        }).catch((err) => {
-            reject(err)
-        })
+        axios.get(`http://localhost:4000/api/projects/${slug}`).then((resp) => {
+            resolve(resp.data.data)
+        }).catch((err) => { reject(err) })
     })
 }
 
+
+
+// module.exports.projectDetails = function (slug) {
+//     return new Promise((resolve, reject) => {
+//         Project.findOne({ slug: slug }).then(data => {
+//             resolve(data)
+//         }).catch((err) => {
+//             reject(err)
+//         })
+//     })
+// }
+
 module.exports.create = function (data) {
     return new Promise((resolve, reject) => {
-
-        let newProject = new Project(data);
-
-        newProject.save().then((data) => {
-            resolve(data)
-        }).catch((err) => {
-            reject(err)
-        })
+        axios.post('http://localhost:4000/api/projects', data).then((respesons))
     })
 }
 
