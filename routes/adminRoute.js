@@ -23,6 +23,7 @@ const upload = multer({
     storage: storage
 })
 
+
 router.get('/', (req, res, next) => {
     ProjectService.projectList().then((data) => {
         res.render('admin/dashboard', {
@@ -35,6 +36,9 @@ router.get('/', (req, res, next) => {
     })
 
 })
+
+// project-section
+
 router.get('/project', (req, res, next) => {
     ProjectService.projectList().then((data) => {
         res.render('admin/project', {
@@ -64,60 +68,71 @@ router.get('/project/:slug', (req, res, next) => {
     })
 })
 
-router.post('/project/:slug/update', function (req, res, next) {
+router.get('/addProject', (req, res, next) => {
+    ProjectService.projectList().then((data) => {
+        res.render('admin/addProject', {
+            layout: 'admin/layout',
+            title: 'New Project',
+            data: data
+        })
+    }).catch((err) => {
+        next(err)
+    })
+
+})
+
+router.post('/add-project', (req, res, next) => {
     let data = req.body;
-    // console.log(data)
     // data.slug = data.name.split(' ').join('-').toLowerCase();
-    // console.log('parms', req.params.slug)
-    // tag section
-    let t = data.tags.split(',');
-    let classes = ['success', 'danger', 'info', 'warning'];
-    data.tags = t.map((ele, i) => {
-        return { name: ele, class: classes[i] }
-    });
+    // // tag section
+    // let t = data.tags.split(',');
+    // let classes = ['success', 'danger', 'info', 'warning'];
+    // data.tags = t.map((ele, i) => {
+    //     return { name: ele, class: classes[i] }
+    // });
     // related projects
-    ProjectService.updateProject(req.params.slug, data).then((data) => {
+    ProjectService.create(data).then((data) => {
         res.redirect('/admin/project')
     }).catch((err) => {
         next(err)
     })
 })
 
-router.get('/project/:slug/delete', function (req, res, next) {
-    ProjectService.deleteProject(req.params.slug).then(d => {
+router.get('/project/:_id/delete', function (req, res, next) {
+    ProjectService.deleteProject(req.params._id).then(d => {
         res.redirect('/admin/project')
     }).catch(err => next(err))
 })
 
-router.get('/blog/:slug/delete', (req, res, next) => {
-    BlogService.deleteBlog(req.params.slug).then((data) => {
-        res.redirect('/admin/blog')
-    }).catch((err) => {
-        next(err)
-    })
-})
-
-router.post('/blog/:slug/update', (req, res, next) => {
+router.post('/project/:_id/update', function (req, res, next) {
     let data = req.body;
     // data.slug = data.name.split(' ').join('-').toLowerCase();
-    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
-    let random = parseInt(Math.random() * classes.length)
-    let randomClass = classes[random]
-    data.tags = { name: data.tags, class: randomClass }
-    BlogService.updateBlog(req.params.slug, data).then((data) => {
-        res.redirect('/admin/blog')
+    // // tag section
+    // let t = data.tags.split(',');
+    // let classes = ['success', 'danger', 'info', 'warning'];
+    // data.tags = t.map((ele, i) => {
+    //     return { name: ele, class: classes[i] }
+    // });
+    // related projects
+    ProjectService.updateProject(req.params._id, data).then((data) => {
+        res.redirect('/admin/project')
     }).catch((err) => {
         next(err)
     })
-
 })
 
-router.get('/project/:slug/upload', function (req, res, next) {
+router.get('/project/:_id/upload', function (req, res, next) {
     res.render('admin/upload', {
         layout: '/admin/layout',
         title: 'Upload',
-        path: `/admin/project/${req.params.slug}/upload-image`
+        path: `/admin/project/${req.params._id}/upload-image`
     })
+})
+
+router.post('/project/:_id/upload-image', upload.single('img'), (req, res, next) => {
+    ProjectService.uploadImage(req.params._id, { image: `/image/${req.file.originalname}` }).then(dt => {
+        res.redirect('/admin/project')
+    }).catch(err => next(err))
 })
 
 router.get('/project/:slug/upload-demo', function (req, res, next) {
@@ -127,7 +142,6 @@ router.get('/project/:slug/upload-demo', function (req, res, next) {
         path: `/admin/project/${req.params.slug}/upload-demo`
     })
 })
-
 
 router.post('/project/:slug/upload-demo', function (req, res, next) {
 
@@ -152,11 +166,39 @@ router.post('/project/:slug/upload-demo', function (req, res, next) {
 
 })
 
-router.post('/project/:slug/upload-image', upload.single('img'), (req, res, next) => {
-    ProjectService.updateProject(req.params.slug, { image: `/image/${req.file.originalname}` }).then(dt => {
-        res.redirect('/admin/project')
-    }).catch(err => next(err))
+// blog-section
+
+router.get('/blog/:slug/delete', (req, res, next) => {
+    BlogService.deleteBlog(req.params.slug).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
+    })
 })
+
+
+
+
+
+router.post('/blog/:slug/update', (req, res, next) => {
+    let data = req.body;
+    // data.slug = data.name.split(' ').join('-').toLowerCase();
+    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
+    let random = parseInt(Math.random() * classes.length)
+    let randomClass = classes[random]
+    data.tags = { name: data.tags, class: randomClass }
+    BlogService.updateBlog(req.params.slug, data).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
+    })
+
+})
+
+
+
+
+
 
 router.get('/blog', (req, res, next) => {
     BlogService.blogList().then((data) => {
@@ -185,6 +227,28 @@ router.get('/blog/:slug', (req, res, next) => {
     })
 })
 
+router.get('/addBlog', (req, res) => {
+    res.render('admin/addBlog', {
+        layout: 'admin/layout',
+        title: 'New Blog'
+    })
+})
+
+router.post('/add-blog', (req, res, next) => {
+    // let data = req.body;
+    // data.slug = data.name.split(' ').join('-').toLowerCase();
+    // let classes = ['primar', 'success', 'danger', 'info', 'warning'];
+    // let random = parseInt(Math.random() * classes.length)
+    // let randomClass = classes[random]
+    // data.tags = { name: data.tags, class: randomClass }
+    BlogService.create(data).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
+    })
+})
+
+
 router.get('/blog/:slug/upload', function (req, res, next) {
     res.render('admin/upload', {
         layout: '/admin/layout',
@@ -205,58 +269,12 @@ router.get('/signout', (req, res) => {
     res.redirect('/signin')
 })
 
-router.get('/addProject', (req, res, next) => {
-    ProjectService.projectList().then((data) => {
-        res.render('admin/addProject', {
-            layout: 'admin/layout',
-            title: 'New Project',
-            data: data
-        })
-    }).catch((err) => {
-        next(err)
-    })
 
-})
 
-router.post('/add-project', (req, res, next) => {
-    let data = req.body;
 
-    data.slug = data.name.split(' ').join('-').toLowerCase();
-    // tag section
-    let t = data.tags.split(',');
-    let classes = ['success', 'danger', 'info', 'warning'];
-    data.tags = t.map((ele, i) => {
-        return { name: ele, class: classes[i] }
-    });
-    // related projects
-    ProjectService.create(data).then((data) => {
-        res.redirect('/admin/project')
-    }).catch((err) => {
-        next(err)
-    })
-})
 
-router.get('/addBlog', (req, res) => {
-    res.render('admin/addBlog', {
-        layout: 'admin/layout',
-        title: 'New Blog'
-    })
-})
 
-router.post('/add-blog', (req, res, next) => {
 
-    let data = req.body;
-    data.slug = data.name.split(' ').join('-').toLowerCase();
-    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
-    let random = parseInt(Math.random() * classes.length)
-    let randomClass = classes[random]
-    data.tags = { name: data.tags, class: randomClass }
-    BlogService.create(data).then((data) => {
-        res.redirect('/admin/blog')
-    }).catch((err) => {
-        next(err)
-    })
-})
 
 router.get('/user-contact', (req, res, next) => {
     ContactService.contactList().then((data) => {

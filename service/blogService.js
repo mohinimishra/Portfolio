@@ -38,12 +38,22 @@ module.exports.blogDetail = function (slug) {
 }
 
 
+// module.exports.create = function (data) {
+//     return new Promise((resolve, reject) => {
+
+//         let newBlog = new Blog(data);
+//         newBlog.save().then((data) => {
+//             resolve(data)
+//         }).catch((err) => {
+//             reject(err)
+//         })
+//     })
+// }
+
 module.exports.create = function (data) {
     return new Promise((resolve, reject) => {
-
-        let newBlog = new Blog(data);
-        newBlog.save().then((data) => {
-            resolve(data)
+        axios.post(`http://localhost:4000/api/blogs`, data).then((resp) => {
+            resolve(resp.data.data)
         }).catch((err) => {
             reject(err)
         })
