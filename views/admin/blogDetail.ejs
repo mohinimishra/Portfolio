@@ -11,7 +11,7 @@
     </div>
 
 </div>
-<form class="needs-validation" method="Post" action="/admin/blog/<%= data.slug%>/update">
+<form class="needs-validation" method="Post" action="/admin/blog/<%= data._id %>/update">
     <div class="form-row">
         <div class="col-md-6 mb-3">
             <label for="name">Name</label>
@@ -58,17 +58,17 @@
             <div class="col-md-6 mb-3 ml-5 mt-4">
                 <% if(data.image) {%>
                 <img src="<%= data.image%>" width=" 80px" height="80px" alt="" srcset="">
-                <a href="/admin/blog/<%= data.slug %>/upload">Change Image</a>
+                <a href="/admin/blog/<%= data._id %>/upload">Change Image</a>
 
                 <%} else {%>
 
-                <a href="/admin/blog/<%= data.slug %>/upload">Upload Image</a>
+                <a href="/admin/blog/<%= data._id %>/upload">Upload Image</a>
 
                 <% } %>
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
+    <button class="btn btn-primary" type="submit">Update</button>
 </form>
 
 <script>

@@ -5,7 +5,6 @@ let mobile = document.querySelector('#mobile')
 let textarea = document.querySelector('#textarea')
 let msg = document.querySelector('#msg')
 
-
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     let data = {
@@ -19,7 +18,8 @@ form.addEventListener('submit', function (e) {
     fetch('http://localhost:4000/api/contacts', {
         "method": "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+
         },
         body: JSON.stringify(data)
     }).then((dt) => {

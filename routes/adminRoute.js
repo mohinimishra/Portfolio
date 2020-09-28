@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const data = require('../data').data;
+// const data = require('../data').data;
 const Project = require('../models/projectSchema')
 const ProjectService = require('../service/projectService')
 const BlogService = require('../service/blogService')
@@ -130,7 +130,7 @@ router.get('/project/:_id/upload', function (req, res, next) {
 })
 
 router.post('/project/:_id/upload-image', upload.single('img'), (req, res, next) => {
-    ProjectService.uploadImage(req.params._id, { image: `/image/${req.file.originalname}` }).then(dt => {
+    ProjectService.updateProject(req.params._id, { image: `/image/${req.file.originalname}` }).then(dt => {
         res.redirect('/admin/project')
     }).catch(err => next(err))
 })
@@ -168,38 +168,6 @@ router.post('/project/:slug/upload-demo', function (req, res, next) {
 
 // blog-section
 
-router.get('/blog/:slug/delete', (req, res, next) => {
-    BlogService.deleteBlog(req.params.slug).then((data) => {
-        res.redirect('/admin/blog')
-    }).catch((err) => {
-        next(err)
-    })
-})
-
-
-
-
-
-router.post('/blog/:slug/update', (req, res, next) => {
-    let data = req.body;
-    // data.slug = data.name.split(' ').join('-').toLowerCase();
-    let classes = ['primar', 'success', 'danger', 'info', 'warning'];
-    let random = parseInt(Math.random() * classes.length)
-    let randomClass = classes[random]
-    data.tags = { name: data.tags, class: randomClass }
-    BlogService.updateBlog(req.params.slug, data).then((data) => {
-        res.redirect('/admin/blog')
-    }).catch((err) => {
-        next(err)
-    })
-
-})
-
-
-
-
-
-
 router.get('/blog', (req, res, next) => {
     BlogService.blogList().then((data) => {
         res.render('admin/blog', {
@@ -214,17 +182,15 @@ router.get('/blog', (req, res, next) => {
 
 router.get('/blog/:slug', (req, res, next) => {
     let slug = req.params.slug;
-    let tags = data.tags
     BlogService.blogDetail(slug).then((data) => {
+        let tags = data.tags
         res.render('admin/blogDetail', {
             layout: 'admin/layout',
             data: data,
             title: slug,
             tags: tags
         })
-    }).catch((err) => {
-        next(err)
-    })
+    }).catch(err => next(err))
 })
 
 router.get('/addBlog', (req, res) => {
@@ -235,7 +201,7 @@ router.get('/addBlog', (req, res) => {
 })
 
 router.post('/add-blog', (req, res, next) => {
-    // let data = req.body;
+    let data = req.body;
     // data.slug = data.name.split(' ').join('-').toLowerCase();
     // let classes = ['primar', 'success', 'danger', 'info', 'warning'];
     // let random = parseInt(Math.random() * classes.length)
@@ -248,17 +214,40 @@ router.post('/add-blog', (req, res, next) => {
     })
 })
 
-
-router.get('/blog/:slug/upload', function (req, res, next) {
-    res.render('admin/upload', {
-        layout: '/admin/layout',
-        title: upload,
-        path: `/admin/blog/${req.params.slug}/upload-image`
+router.get('/blog/:_id/delete', (req, res, next) => {
+    BlogService.deleteBlog(req.params._id).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
     })
 })
 
-router.post('/blog/:slug/upload-image', upload.single('img'), (req, res, next) => {
-    BlogService.updateBlog(req.params.slug, { image: `/image/${req.file.originalname}` }).then((data) => {
+
+router.get('/blog/:_id/upload', function (req, res, next) {
+    res.render('admin/upload', {
+        layout: '/admin/layout',
+        title: 'upload',
+        path: `/admin/blog/${req.params._id}/upload-image`
+    })
+})
+
+router.post('/blog/:_id/update', (req, res, next) => {
+    let data = req.body;
+    // data.slug = data.name.split(' ').join('-').toLowerCase();
+    // let classes = ['primar', 'success', 'danger', 'info', 'warning'];
+    // let random = parseInt(Math.random() * classes.length)
+    // let randomClass = classes[random]
+    // data.tags = { name: data.tags, class: randomClass }
+    BlogService.updateBlog(req.params._id, data).then((data) => {
+        res.redirect('/admin/blog')
+    }).catch((err) => {
+        next(err)
+    })
+
+})
+
+router.post('/blog/:_id/upload-image', upload.single('img'), (req, res, next) => {
+    BlogService.updateBlog(req.params._id, { image: `/image/${req.file.originalname}` }).then((data) => {
         res.redirect('/admin/blog')
     }).catch(err => next(err))
 })
@@ -268,13 +257,6 @@ router.get('/signout', (req, res) => {
     console.log(req.session)
     res.redirect('/signin')
 })
-
-
-
-
-
-
-
 
 router.get('/user-contact', (req, res, next) => {
     ContactService.contactList().then((data) => {
@@ -294,4 +276,4 @@ router.get('/user-contact/:_id/delete', (req, res, next) => {
     })
 })
 
-module.exports = router;
+module.exports = router

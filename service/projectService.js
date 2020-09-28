@@ -22,7 +22,7 @@ module.exports.projectList = function () {
 
 module.exports.projectDetails = function (slug) {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/projects/${slug}`).then((resp) => {
+        axios.get(`http://localhost:4000/api/projects/slug/${slug}`).then((resp) => {
             resolve(resp.data.data)
         }).catch((err) => { reject(err) })
     })
@@ -47,7 +47,7 @@ module.exports.create = function (data) {
 
 module.exports.updateProject = function (_id, data) {
     return new Promise((resolve, reject) => {
-        axios.post(`http://localhost:4000/api/projects/${_id}/update`, data).then((resp) => {
+        axios.put(`http://localhost:4000/api/projects/${_id}`, data).then((resp) => {
             resolve(resp.data.data)
         }).catch((err) => {
             reject(err)
@@ -66,7 +66,7 @@ module.exports.uploadImage = function (_id, data) {
 
 module.exports.deleteProject = function (_id) {
     return new Promise((resolve, reject) => {
-        axios.delete(`http://localhost:4000/api/projects/${_id}/delete`).then((resp) => {
+        axios.delete(`http://localhost:4000/api/projects/${_id}`).then((resp) => {
             resolve(resp.data.data)
         }).catch(err => reject(err))
     })
