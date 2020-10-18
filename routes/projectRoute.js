@@ -4,7 +4,7 @@ const Project = require('../models/projectSchema')
 const ProjectService = require('../service/projectService')
 
 router.get('/', (req, res, next) => {
-    ProjectService.projectList().then((data) => {
+    ProjectService.projectList(req).then((data) => {
         res.render('projects', {
             layout: 'layout',
             title: 'Projects',
@@ -23,7 +23,7 @@ router.get('/:slug/demo', (req, res, next) => {
 })
 router.get('/:slug', (req, res, next) => {
     let slug = req.params.slug
-    ProjectService.projectDetails(slug).then((data) => {
+    ProjectService.projectDetails(slug, req).then((data) => {
         res.render('projectDetails', {
             layout: 'layout',
             title: slug,

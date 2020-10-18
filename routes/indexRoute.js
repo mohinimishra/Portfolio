@@ -26,23 +26,24 @@ router.get('/signin', (req, res) => {
     })
 })
 
+// router.post('/contact', (req, res, next) => {
+//     let body = req.body
+//     ContactService.addContactInfo(body, req).then((data) => {
+//         res.status(201).json({ message: "Contact saved successfully" })
+//     }).catch((err) => {
+//         next(err)
+//     })
+// })
+
 router.post('/signin', (req, res, next) => {
     let body = req.body
-    console.log(req.body)
-    User.findOne({ emailId: body.email }).then(data => {
-        console.log('DB', data)
-        if (data) {
-            if (!data.comparePass(body.password)) {
-                res.render('signin', {
-                    layout: 'layout',
-                    title: 'login',
-                    message: 'Email or Password Incorrect'
-                })
-            } else {
-                req.session.user = data
-                req.session.isLoggedIn = true
-                res.redirect('/admin')
-            }
+    UserService.signin(body).then((dt) => {
+        if (dt) {
+            req.session.user = dt
+            req.session.isLoggedIn = true
+            req.session.token = dt.token
+            res.redirect('/admin')
+
         } else {
             res.render('signin', {
                 layout: 'layout',
@@ -50,7 +51,63 @@ router.post('/signin', (req, res, next) => {
                 message: 'Email or Password Incorrect'
             })
         }
-    }).catch(err => next(err))
+
+    }).catch((err) => {
+        res.render('signin', {
+            layout: 'layout',
+            title: 'login',
+            message: 'Email or Password Incorrect'
+        })
+    })
+
+    //     {
+    //         if (!dt.comparePass(body.password)){
+    //             res.render('signin', {
+    //                 layout: 'layout',
+    //                 title: 'login',
+    //                 message: 'Email or Password Incorrect'
+    //         }
+    //         else {
+    //             req.session.user = dt
+    //             req.session.isLoggedIn = true
+    //             res.redirect('/admin')
+    //         }
+    //     } else {
+    //         res.render('signin', {
+    //             layout: 'layout',
+    //             title: 'login',
+    //             message: 'Email or Password Incorrect'
+    //         })
+    //     }
+    // }).catch(err => next(err))
+    // res.render('admin/dashboard', {
+    //     layout: 'admin/layout',
+    //     title: 'dashboard',
+    //     message: 'Email or Password Incorrect'
+    // })
+    // console.log(req.body)
+    // User.findOne({ emailId: body.email }).then(data => {
+    //     console.log('DB', data)
+    //     if (data) {
+    //         if (!data.comparePass(body.password)) {
+    //             res.render('signin', {
+    //                 layout: 'layout',
+    //                 title: 'login',
+    //                 message: 'Email or Password Incorrect'
+    //             })
+    //         } else {
+    //     req.session.user = data
+    //     req.session.isLoggedIn = true
+    //     res.redirect('/admin')
+    // }
+    //         } else {
+    //         res.render('signin', {
+    //             layout: 'layout',
+    //             title: 'login',
+    //             message: 'Email or Password Incorrect'
+    //         })
+    //     }
+    //     }).catch(err => next(err))
 })
 
 router.get('/signup', (req, res) => {
@@ -71,14 +128,7 @@ router.post('/signup', (req, res, next) => {
     })
 })
 
-router.post('/contact', (req, res, next) => {
-    let body = req.body
-    ContactService.addContactInfo(body).then((data) => {
-        res.status(201).json({ message: "Contact saved successfully" })
-    }).catch((err) => {
-        next(err)
-    })
-})
 
 
-module.exports = router;
+
+module.exports = router

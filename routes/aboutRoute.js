@@ -3,7 +3,7 @@ const router = require('express').Router();
 let BlogService = require('../service/blogService')
 
 router.get('/', (req, res) => {
-    BlogService.blogList().then((data) => {
+    BlogService.blogList(req).then((data) => {
         res.render('about', {
             layout: 'layout',
             title: 'about',

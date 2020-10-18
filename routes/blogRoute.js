@@ -5,8 +5,7 @@ const BlogService = require('../service/blogService')
 
 // let blogData = data.myBlog;
 router.get('/', (req, res, next) => {
-    BlogService.blogList().then((data) => {
-        console.log('Db Data', data)
+    BlogService.blogList(req).then((data) => {
 
         let randumNum = parseInt(Math.random() * data.length)
         // console.log(data.blogCategories)
@@ -25,7 +24,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:slug', (req, res, next) => {
     let slug = req.params.slug
-    BlogService.blogDetail(slug).then((data) => {
+    BlogService.blogDetail(slug, req).then((data) => {
         res.render('blogDetails', {
             layout: 'layout',
             title: slug,

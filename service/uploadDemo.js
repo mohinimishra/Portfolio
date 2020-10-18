@@ -6,7 +6,6 @@ function upload(req, res, fn, dN, cb) {
     try {
         fs.mkdirSync(dN)
     } catch (error) {
-        console.log(error)
         cb(error, null)
     }
 
@@ -27,7 +26,6 @@ function upload(req, res, fn, dN, cb) {
         if (err) {
             cb(err, null)
         } else {
-            console.log(success)
             cb(null, success)
         }
     })

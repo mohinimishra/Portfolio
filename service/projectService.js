@@ -2,9 +2,17 @@ const Project = require('../models/projectSchema');
 const axios = require('axios');
 
 
-module.exports.projectList = function () {
+module.exports.projectList = function (req) {
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:4000/api/projects').then((resp) => {
+        let header = {}
+        if (req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+        }
+        axios.get('http://localhost:4000/api/projects', {
+            headers: header
+        }).then((resp) => {
             resolve(resp.data.data)
         }).catch(err => reject(err))
     })
@@ -22,7 +30,11 @@ module.exports.projectList = function () {
 
 module.exports.projectDetails = function (slug) {
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:4000/api/projects/slug/${slug}`).then((resp) => {
+        axios.get(`http://localhost:4000/api/projects/slug/${slug}`, {
+            headers: {
+                "x-access-apikey": "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+            }
+        }).then((resp) => {
             resolve(resp.data.data)
         }).catch((err) => { reject(err) })
     })
@@ -37,26 +49,50 @@ module.exports.projectDetails = function (slug) {
     // }
 }
 
-module.exports.create = function (data) {
+module.exports.create = function (data, req) {
     return new Promise((resolve, reject) => {
-        axios.post('http://localhost:4000/api/projects', data).then((resp) => {
+        let header = {}
+        if (req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+        }
+        axios.post('http://localhost:4000/api/projects', data, {
+            headers: header
+        }).then((resp) => {
             resolve(resp.data.data)
         }).catch((err) => { reject(err) })
     })
 }
 
-module.exports.updateProject = function (_id, data) {
+module.exports.updateProject = function (_id, data, req) {
+    let header = {}
+    if (req.session.token) {
+        header.Authorization = `Bearer ${req.session.token}`
+    } else {
+        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+    }
     return new Promise((resolve, reject) => {
-        axios.put(`http://localhost:4000/api/projects/${_id}`, data).then((resp) => {
+        axios.put(`http://localhost:4000/api/projects/${_id}`, data, {
+            headers: header
+        }).then((resp) => {
             resolve(resp.data.data)
         }).catch((err) => {
             reject(err)
         })
     })
 }
-module.exports.uploadImage = function (_id, data) {
+module.exports.uploadImage = function (_id, data, req) {
+    let header = {}
+    if (req.session.token) {
+        header.Authorization = `Bearer ${req.session.token}`
+    } else {
+        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+    }
     return new Promise((resolve, reject) => {
-        axios.post(`http://localhost:4000/api/projects/${_id}/upload-image`, data).then((resp) => {
+        axios.post(`http://localhost:4000/api/projects/${_id}/upload-image`, data, {
+            headers: header
+        }).then((resp) => {
             resolve(resp.data.data)
         }).catch((err) => {
             reject(err)
@@ -64,9 +100,17 @@ module.exports.uploadImage = function (_id, data) {
     })
 }
 
-module.exports.deleteProject = function (_id) {
+module.exports.deleteProject = function (_id, req) {
+    let header = {}
+    if (req.session.token) {
+        header.Authorization = `Bearer ${req.session.token}`
+    } else {
+        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+    }
     return new Promise((resolve, reject) => {
-        axios.delete(`http://localhost:4000/api/projects/${_id}`).then((resp) => {
+        axios.delete(`http://localhost:4000/api/projects/${_id}`, {
+            headers: header
+        }).then((resp) => {
             resolve(resp.data.data)
         }).catch(err => reject(err))
     })

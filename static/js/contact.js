@@ -15,7 +15,7 @@ form.addEventListener('submit', function (e) {
     }
     console.log(data)
 
-    fetch('http://localhost:4000/api/contacts', {
+    fetch('http://localhost:4000/auth/contacts', {
         "method": "POST",
         headers: {
             'Content-Type': 'application/json',
