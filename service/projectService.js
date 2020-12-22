@@ -8,7 +8,7 @@ module.exports.projectList = function (req) {
         if (req.session.token) {
             header.Authorization = `Bearer ${req.session.token}`
         } else {
-            header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
         }
         axios.get('http://localhost:4000/api/projects', {
             headers: header
@@ -28,16 +28,24 @@ module.exports.projectList = function (req) {
     // }
 }
 
-module.exports.projectDetails = function (slug) {
+module.exports.projectDetails = function (req, slug) {
     return new Promise((resolve, reject) => {
+        let header = {}
+        console.log(slug)
+        if (req.session && req.session && req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
+        }
         axios.get(`http://localhost:4000/api/projects/slug/${slug}`, {
-            headers: {
-                "x-access-apikey": "d88cf26c-4dff-4482-bd07-0308d3004e3c"
-            }
+            headers: header
         }).then((resp) => {
             resolve(resp.data.data)
-        }).catch((err) => { reject(err) })
+        }).catch((err) => {
+            reject(err)
+        })
     })
+
     // module.exports.projectDetails = function (slug) {
     //     return new Promise((resolve, reject) => {
     //         Project.findOne({ slug: slug }).then(data => {
@@ -55,7 +63,7 @@ module.exports.create = function (data, req) {
         if (req.session.token) {
             header.Authorization = `Bearer ${req.session.token}`
         } else {
-            header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
         }
         axios.post('http://localhost:4000/api/projects', data, {
             headers: header
@@ -70,7 +78,7 @@ module.exports.updateProject = function (_id, data, req) {
     if (req.session.token) {
         header.Authorization = `Bearer ${req.session.token}`
     } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+        header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
     }
     return new Promise((resolve, reject) => {
         axios.put(`http://localhost:4000/api/projects/${_id}`, data, {
@@ -87,7 +95,7 @@ module.exports.uploadImage = function (_id, data, req) {
     if (req.session.token) {
         header.Authorization = `Bearer ${req.session.token}`
     } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+        header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
     }
     return new Promise((resolve, reject) => {
         axios.post(`http://localhost:4000/api/projects/${_id}/upload-image`, data, {
@@ -105,7 +113,7 @@ module.exports.deleteProject = function (_id, req) {
     if (req.session.token) {
         header.Authorization = `Bearer ${req.session.token}`
     } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+        header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
     }
     return new Promise((resolve, reject) => {
         axios.delete(`http://localhost:4000/api/projects/${_id}`, {

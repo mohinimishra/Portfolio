@@ -56,8 +56,9 @@ router.get('/project', (req, res, next) => {
 
 router.get('/project/:slug', (req, res, next) => {
     let slug = req.params.slug;
-
-    ProjectService.projectDetails(slug).then((data) => {
+    console.log('projectSlug', slug)
+    ProjectService.projectDetails(req, slug).then((data) => {
+        console.log('project-data', data)
         let tags = data.tags
         res.render('admin/projectDetail', {
             layout: 'admin/layout',

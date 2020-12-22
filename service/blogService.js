@@ -2,13 +2,13 @@ const Blog = require('../models/blogSchema');
 const axios = require('axios')
 
 module.exports.blogList = function (req) {
-    let header = {}
-    if (req.session.token) {
-        header.Authorization = `Bearer ${req.session.token}`
-    } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
-    }
     return new Promise((resolve, reject) => {
+        let header = {}
+        if (req.session && req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
+        }
         axios.get(`http://localhost:4000/api/blogs`, {
             headers: header
         }).then((resp) => {
@@ -27,13 +27,14 @@ module.exports.blogList = function (req) {
 }
 
 module.exports.blogDetail = function (slug, req) {
-    let header = {}
-    if (req.session.token) {
-        header.Authorization = `Bearer ${req.session.token}`
-    } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
-    }
+
     return new Promise((resolve, reject) => {
+        let header = {}
+        if (req.session && req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
+        }
         axios.get(`http://localhost:4000/api/blogs/slug/${slug}`, {
             headers: header
         }).then((resp) => {
@@ -53,13 +54,14 @@ module.exports.blogDetail = function (slug, req) {
 }
 
 module.exports.create = function (data, req) {
-    let header = {}
-    if (req.session.token) {
-        header.Authorization = `Bearer ${req.session.token}`
-    } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
-    }
+
     return new Promise((resolve, reject) => {
+        let header = {}
+        if (req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
+        }
         axios.post(`http://localhost:4000/api/blogs`, data, {
             headers: header
         }).then((resp) => {
@@ -88,7 +90,7 @@ module.exports.deleteBlog = function (_id, req) {
         if (req.session.token) {
             header.Authorization = `Bearer ${req.session.token}`
         } else {
-            header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
         }
         axios.delete(`http://localhost:4000/api/blogs/${_id}`, {
             headers: header
@@ -106,13 +108,14 @@ module.exports.deleteBlog = function (_id, req) {
 }
 
 module.exports.updateBlog = function (_id, data, req) {
-    let header = {}
-    if (req.session.token) {
-        header.Authorization = `Bearer ${req.session.token}`
-    } else {
-        header["x-access-apikey"] = "d88cf26c-4dff-4482-bd07-0308d3004e3c"
-    }
+
     return new Promise((resolve, reject) => {
+        let header = {}
+        if (req.session.token) {
+            header.Authorization = `Bearer ${req.session.token}`
+        } else {
+            header["x-access-apikey"] = "63d8e2a6-5089-4b96-a18e-89ea06c80225"
+        }
         axios.put(`http://localhost:4000/api/blogs/${_id}`, data, {
             headers: header
         }).then((resp) => {
